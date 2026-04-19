@@ -14,6 +14,7 @@ import pandas as pd
 import ssl
 import os
 from flask import send_file
+from flask import Response
 
 import smtplib
 from email.message import EmailMessage
@@ -400,9 +401,11 @@ app.secret_key = "secret123"
 
 
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+
         name = request.form.get("name")
         email = request.form.get("email")
         student_id = request.form.get("student_id")
@@ -413,16 +416,18 @@ def index():
             flash("All fields are required")
             return redirect(url_for("index"))
 
-        # Generate PDF
-        pdf_file = generate_letter(name, student_id, programme, phone)
+        # STEP 1: show loading page first
+        def process():
+            pdf_file = generate_letter(name, student_id, programme, phone)
 
-        # Send email
-        try:
-            send_email(email, name, pdf_file)
-        except Exception as e:
-            print(e)
-            flash("Letter generated but email could not be sent.")
-            return redirect(url_for("index"))
+            try:
+                send_email(email, name, pdf_file)
+            except Exception as e:
+                print(e)
+
+            return pdf_file
+
+        pdf_file = process()
 
         return send_file(pdf_file, as_attachment=True)
 
