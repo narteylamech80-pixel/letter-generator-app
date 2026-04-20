@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
@@ -429,9 +429,32 @@ def index():
 
         pdf_file = process()
 
-        return send_file(pdf_file, as_attachment=True)
+        # Store PDF path in session for download
+        session['pdf_file'] = pdf_file
+        session['student_name'] = name
+
+        return redirect(url_for("success", name=name))
 
     return render_template("form.html")
+
+
+@app.route("/success", methods=["GET"])
+def success():
+    name = request.args.get("name", "Student")
+    pdf_file = session.get('pdf_file')
+    return render_template("success.html", name=name, pdf_file=pdf_file)
+
+
+@app.route("/download", methods=["GET"])
+def download():
+    pdf_file = session.get('pdf_file')
+    if pdf_file and os.path.exists(pdf_file):
+        return send_file(pdf_file, as_attachment=True)
+    return redirect(url_for("index"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
