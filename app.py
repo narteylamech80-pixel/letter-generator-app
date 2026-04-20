@@ -260,7 +260,7 @@ def generate_letter(name, student_id, programme, phone):
 
     The College of Engineering at KNUST wishes to request a vacation training placement for
     {name}, a third-year student with student ID: {student_id},
-    pursuing a Bachelor of Science in {programme} engineering.
+    pursuing a Bachelor of Science in {programme} Engineering.
     The student can be directly contacted on +233 (0){phone}.<br/>
 
     We would greatly appreciate your consideration in offering this student a vacation training
