@@ -217,7 +217,7 @@ def generate_letter(name, student_id, programme, phone):
 
     our_reference = Paragraph("Our Ref: CoE-VACT/2026",title_style_2_1)
 
-    our_date = Paragraph(" Date: <b>Friday, 17th April 2026.</b>", date_style)
+    our_date = Paragraph(" Date: <b>Wednesday, 22nd April 2026.</b>", date_style)
     rd = Table([[our_reference,"", our_date]], colWidths=[7*cm,4.8*cm, 7*cm],hAlign="CENTER")
     rd.setStyle(TableStyle([
         ("ALIGN", (0,0), (0,0), "LEFT")

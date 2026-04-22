@@ -24,6 +24,18 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       }
 
+      .custom-alert {
+        opacity: 0;
+        transform: translateY(-15px);
+        transition: all 0.5s ease;
+        border-left: 5px solid #ffc107;
+      }
+
+      .custom-alert.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       .header {
         background: #0d6efd;
         color: white;
@@ -135,6 +147,15 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Level</label>
+                    <select name="level" class="form-control" required>
+                      <option value="">Select Level</option>                                           <
+                      <option value="300">Level 300</option>                      
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
                   <label class="form-label">Phone Number</label>
                   <input
                     type="text"
@@ -143,6 +164,9 @@
                     class="form-control"
                     placeholder="e.g. 555123456"
                   />
+                </div>
+                <div id="warningBox" class="alert alert-warning custom-alert">
+                  ⚠️ Only Level 300 Agricultural Engineering students are eligible.
                 </div>
 
                 <button type="submit" class="btn btn-primary">
@@ -185,5 +209,12 @@
         e.target.value = value;
       });
     </script>
+    <script>
+        window.addEventListener("load", () => {
+          document.getElementById("warningBox").classList.add("show");
+        });
+    </script>
+
+
   </body>
 </html>
